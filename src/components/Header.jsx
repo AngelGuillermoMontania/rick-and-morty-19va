@@ -5,8 +5,9 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
+import { Link } from "react-router-dom";
 
-export default function SearchAppBar({ handleSet }) {
+export default function SearchAppBar() {
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static" sx={{ backgroundColor: "#000000c9" }}>
@@ -20,34 +21,27 @@ export default function SearchAppBar({ handleSet }) {
             Rick and Morty APP
           </Typography>
           <Stack spacing={2} direction="row">
-            <Button
-              onClick={() => handleSet("Alive")}
-              variant="contained"
-              color="success"
-            >
-              Alive
-            </Button>
-            <Button
-              onClick={() => handleSet("Dead")}
-              variant="contained"
-              color="error"
-            >
-              Dead
-            </Button>
-            <Button
-              onClick={() => handleSet("Unknown")}
-              variant="contained"
-              color="secondary"
-            >
-              Unknown
-            </Button>
-            <Button
-              onClick={() => handleSet("")}
-              variant="contained"
-              color="primary"
-            >
-              Reset
-            </Button>
+            <Link to="/Alive">
+              <Button variant="contained" color="success">
+                Alive
+              </Button>
+            </Link>
+
+            <Link to="/Dead">
+              <Button variant="contained" color="error">
+                Dead
+              </Button>
+            </Link>
+            <Link to="/unknown">
+              <Button variant="contained" color="secondary">
+                Unknown
+              </Button>
+            </Link>
+            <Link to="/">
+              <Button variant="contained" color="primary">
+                Reset
+              </Button>
+            </Link>
           </Stack>
         </Toolbar>
       </AppBar>

@@ -1,42 +1,19 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
 import Header from "./components/Header.jsx";
 import ContainCard from "./components/ContainCard.jsx";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import DetailCharacter from "./components/DetailCharacter.jsx";
 
 function App() {
-  const [characters, setCharacters] = useState([]);
-  const [status, setStatus] = useState("");
-  const [page, setPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
-
-  function handleSet(status) {
-    setStatus(status);
-    setPage(1);
-  }
-
-  useEffect(() => {
-    axios(
-      `https://rickandmortyapi.com/api/character/?page=${page}&${
-        status ? `status=${status}` : ""
-      }`
-    )
-      .then(({ data }) => {
-        setTotalPages(data.info.pages);
-        setCharacters(data.results);
-      })
-      .catch((error) => console.log(error));
-  }, [status, page]);
-
   return (
-    <>
-      <Header handleSet={handleSet} />
-      <ContainCard
-        characters={characters}
-        page={page}
-        setPage={setPage}
-        totalPages={totalPages}
-      />
-    </>
+    <BrowserRouter>
+      <Header />
+      <Routes>
+        <Route path="/" element={<ContainCard />} />
+        <Route path="/:filterStatus" element={<ContainCard />} />
+        <Route path="/detail/:idCharacter" element={<DetailCharacter />} />
+        <Route path="*" element={<h2>ERROR 404 NOT FOUND</h2>} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
