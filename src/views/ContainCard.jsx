@@ -1,5 +1,5 @@
 import { Box, Pagination } from "@mui/material";
-import Card from "./Card";
+import Card from "../components/Card";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
@@ -11,6 +11,7 @@ export default function ContainCard() {
 
   const { filterStatus } = useParams();
 
+  /* Cambia la pagina actual renderizada, funcion usada con MaterialUI */
   const handleChange = (event, value) => {
     setPage(value);
   };

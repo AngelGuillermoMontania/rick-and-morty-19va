@@ -1,7 +1,6 @@
-import Header from "./components/Header.jsx";
-import ContainCard from "./components/ContainCard.jsx";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import DetailCharacter from "./components/DetailCharacter.jsx";
+import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
+import Header from "./components/static/Header.jsx";
+import { ContainCard, DetailCharacter } from "./views";
 
 function App() {
   return (
