@@ -1,5 +1,5 @@
 import { Box, Pagination } from "@mui/material";
-import Card from "../components/Card";
+import CardCharacter from "../components/CardCharacter";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
@@ -38,18 +38,8 @@ export default function ContainCard() {
       sx={{ display: "flex", justifyContent: "space-around", flexWrap: "wrap" }}
     >
       {characters &&
-        characters.map(({ id, name, species, gender, image, status }) => {
-          return (
-            <Card
-              key={id}
-              id={id}
-              name={name}
-              species={species}
-              gender={gender}
-              image={image}
-              status={status}
-            />
-          );
+        characters.map((character) => {
+          return <CardCharacter key={character.id} character={character} />;
         })}
 
       <Pagination

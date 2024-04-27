@@ -1,15 +1,22 @@
-import { Card, CardContent, CardMedia, Typography } from "@mui/material";
+import {
+  Button,
+  Card,
+  CardContent,
+  CardMedia,
+  Typography,
+  CardActions,
+} from "@mui/material";
 import { Link as LinkDelRouter, useNavigate } from "react-router-dom";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import { useContext } from "react";
+import { FavoriteContext } from "../context/FavoriteContext";
 
-export default function CardCharacter({
-  name,
-  species,
-  gender,
-  image,
-  status,
-  id,
-}) {
+export default function CardCharacter({ character }) {
   const navigate = useNavigate();
+
+  const { addFavorite, isFavorite, removeFavorite } =
+    useContext(FavoriteContext);
 
   return (
     <Card
@@ -19,14 +26,20 @@ export default function CardCharacter({
         border: "1px solid #a3a2a2",
         boxShadow: "1px 1px 12px 0px rgba(77,74,74,0.75)",
       }}
-      onClick={() => navigate(id)}
     >
       <CardMedia
         sx={{ height: 250, width: 250 }}
-        image={image}
+        image={character.image}
         title="green iguana"
+        onClick={() => {
+          navigate(`/detail/${character.id}`);
+        }}
       />
-      <CardContent>
+      <CardContent
+        onClick={() => {
+          navigate(`/detail/${character.id}`);
+        }}
+      >
         <Typography
           gutterBottom
           component="div"
@@ -38,7 +51,7 @@ export default function CardCharacter({
             fontWeight: "bold",
           }}
         >
-          {name}
+          {character.name}
         </Typography>
         <Typography
           component="div"
@@ -51,7 +64,7 @@ export default function CardCharacter({
         >
           Gender:{" "}
           <Typography sx={{ color: "#080854", marginLeft: "5px" }}>
-            {gender}
+            {character.gender}
           </Typography>
         </Typography>
         <Typography
@@ -65,7 +78,7 @@ export default function CardCharacter({
         >
           Species:{" "}
           <Typography sx={{ color: "#080854", marginLeft: "5px" }}>
-            {species}
+            {character.species}
           </Typography>
         </Typography>
         <Typography
@@ -79,10 +92,21 @@ export default function CardCharacter({
         >
           Status:{" "}
           <Typography sx={{ color: "#080854", marginLeft: "5px" }}>
-            {status}
+            {character.status}
           </Typography>
         </Typography>
       </CardContent>
+      <CardActions>
+        {isFavorite(character.id) ? (
+          <Button onClick={() => removeFavorite(character.id)}>
+            <FavoriteIcon /> {/* corazon lleno */}
+          </Button>
+        ) : (
+          <Button onClick={() => addFavorite(character)}>
+            <FavoriteBorderIcon />
+          </Button>
+        )}
+      </CardActions>
     </Card>
   );
 }
