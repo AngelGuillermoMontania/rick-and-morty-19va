@@ -1,36 +1,26 @@
 import { Box, Pagination } from "@mui/material";
 import CardCharacter from "../components/CardCharacter";
-import { useEffect, useState } from "react";
-import axios from "axios";
+import { useEffect } from "react";
 import { useParams } from "react-router-dom";
+import useCharacter from "../hooks/useCharacter";
 
 export default function ContainCard() {
-  const [characters, setCharacters] = useState([]);
-  const [page, setPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
-
   const { filterStatus } = useParams();
+
+  const { getCharacters, characters, changePage, totalPages, page } =
+    useCharacter();
 
   /* Cambia la pagina actual renderizada, funcion usada con MaterialUI */
   const handleChange = (event, value) => {
-    setPage(value);
+    changePage(value);
   };
 
   useEffect(() => {
-    axios(
-      `https://rickandmortyapi.com/api/character/?page=${page}&${
-        filterStatus ? `status=${filterStatus}` : ""
-      }`
-    )
-      .then(({ data }) => {
-        setTotalPages(data.info.pages);
-        setCharacters(data.results);
-      })
-      .catch((error) => console.log(error));
+    getCharacters(filterStatus, page);
   }, [filterStatus, page]);
 
   useEffect(() => {
-    setPage(1);
+    changePage(1);
   }, [filterStatus]);
 
   return (

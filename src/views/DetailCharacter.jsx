@@ -1,25 +1,15 @@
 import { Box, Typography } from "@mui/material";
-import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useParams } from "react-router-dom";
+import useCharacter from "../hooks/useCharacter";
 
 export default function DetailCharacter() {
-  const [character, setCharacter] = useState({});
-
   const { idCharacter } = useParams();
 
+  const { getCharacter, character } = useCharacter();
+
   useEffect(() => {
-    async function getCharacter() {
-      try {
-        const response = await axios(
-          `https://rickandmortyapi.com/api/character/${idCharacter}`
-        );
-        setCharacter(response.data);
-      } catch (error) {
-        console.error(error);
-      }
-    }
-    getCharacter();
+    getCharacter(idCharacter);
   }, [idCharacter]);
 
   // material-ui
